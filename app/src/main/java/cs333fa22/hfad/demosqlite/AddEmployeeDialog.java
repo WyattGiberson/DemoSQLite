@@ -29,8 +29,8 @@ public class AddEmployeeDialog extends DialogFragment {
     private Button btnCancel;
     private DBHelper dbHelper;
 
-    public AddEmployeeDialog()
-    {
+    public AddEmployeeDialog(){
+
     }
 
     @Override
@@ -66,7 +66,9 @@ public class AddEmployeeDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
 
+                saveEmployee();
                 dismiss();
+
 
             }
         });
@@ -99,6 +101,10 @@ public class AddEmployeeDialog extends DialogFragment {
             }
         });
 
+        //crete the dbHelper
+        dbHelper = new DBHelper(getContext());
+
+
         builder.setView(dialogView).setMessage("Add New Employee");
         return builder.create();
     }
@@ -107,6 +113,7 @@ public class AddEmployeeDialog extends DialogFragment {
 
     private void saveEmployee()
     {
+
         String toastString = null;
         String name = etvName.getText().toString();
         String desig = etvDesignation.getText().toString();
@@ -122,9 +129,7 @@ public class AddEmployeeDialog extends DialogFragment {
         {
             ArrayList<Employee> emps = new ArrayList<Employee>();
 
-           // employeeListAdapter.setEmployees(emps);
-           // employeeListAdapter.notifyDataSetChanged();
-           // employeeListAdapter.notifyItemRangeChanged(0, emps.size());
+            dbHelper.saveEmployee(name, desig, calInMS);
 
             toastString = "Employee Added!";
         }
